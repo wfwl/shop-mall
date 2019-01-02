@@ -1,0 +1,34 @@
+{
+  "name": "mmall",
+  "version": "1.0.0",
+  "description": "mmall前端代码",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-cli && WEBPACK_ENV=dev webpack-dev-server --inline --contentBase",
+    "dev_win": "webpack-cli && set WEBPACK_ENV=dev && webpack-dev-server --inline --port 8088",
+    "dist": "WEBPACK_ENV=online webpack-cli -p",
+    "dist_win": "WEBPACK_ENV=online webpack-cli -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/promise_Feng/mmall.git"
+  },
+  "author": "wwf",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^2.1.0",
+    "file-loader": "^3.0.1",
+    "hogan": "^1.0.2",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.28.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "dependencies": {
+    "font-awesome": "^4.7.0"
+  }
+}
