@@ -101,6 +101,15 @@ var _user = {
       success: resolve,
       error: reject
     })
+  },
+  updatePassword: function (userInfo, resolve, reject) {
+    _mm.request({
+      url: _mm.geServerUrl('/user/reset_password.do'),
+      method: 'POST',
+      data: userInfo,
+      success: resolve,
+      error: reject
+    })
   }
 }
 

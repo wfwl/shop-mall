@@ -20,18 +20,23 @@ const config = {
   mode: WEBPACK_ENV === 'dev' ? 'development' : 'production',
   entry: {
     'common': ['./src/pages/common/index.js'],
+    'list': ['./src/pages/list/index.js'],
+    'cart': ['./src/pages/cart/index.js'],
     'index': ['./src/pages/index/index.js'],
+    'detail': ['./src/pages/detail/index.js'],
     'login': ['./src/pages/login/index.js'],
     'result': ['./src/pages/result/index.js'],
     'passReset': ['./src/pages/passReset/index.js'],
     'register': ['./src/pages/register/index.js'],
+    'passUpdate': ['./src/pages/passUpdate/index.js'],
     'userCenter': ['./src/pages/userCenter/index.js'],
+    'orderConfirm': ['./src/pages/orderConfirm/index.js'],
     'userCenterUpdate': ['./src/pages/userCenterUpdate/index.js']
   },
   output: {
     filename: 'js/[name].js',
     publicPath: '/',
-    path: path.resolve(__dirname, "dist/view")
+    path: path.resolve(__dirname, "dist")
   },
   externals: {
     'jquery': 'window.jQuery'
@@ -49,7 +54,6 @@ const config = {
 		//设置服务器访问的基本目录
     contentBase:path.resolve(__dirname,'dist'),
 		//服务器ip地址，localhost
-    // host: 'localhost',
     inline: true,
 		port: 8088,
 		open: true, // 自动打开浏览器
@@ -103,13 +107,18 @@ const config = {
   　　chunkFilename: "css/[name].css"
 　　 }),
     new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin(getHtmlConfig('list', '商品列表页')),
+    new HtmlWebpackPlugin(getHtmlConfig('cart', '购物车')),
+    new HtmlWebpackPlugin(getHtmlConfig('orderConfirm', '订单确认')),
     new HtmlWebpackPlugin(getHtmlConfig('index', '首页')),
+    new HtmlWebpackPlugin(getHtmlConfig('detail', '商品详情')),
     new HtmlWebpackPlugin(getHtmlConfig('login', '用户登录')),
     new HtmlWebpackPlugin(getHtmlConfig('result', '操作结果')),
     new HtmlWebpackPlugin(getHtmlConfig('register', '注册')),
     new HtmlWebpackPlugin(getHtmlConfig('passReset', '找回密码')),
     new HtmlWebpackPlugin(getHtmlConfig('userCenter', '个人中心')),
-    new HtmlWebpackPlugin(getHtmlConfig('userCenterUpdate', '个人中心'))
+    new HtmlWebpackPlugin(getHtmlConfig('userCenterUpdate', '个人中心')),
+    new HtmlWebpackPlugin(getHtmlConfig('passUpdate', '修改密码'))
   ]
 }
 

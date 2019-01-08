@@ -3,6 +3,7 @@ var _mm = require('utils/mm.js')
 var header = {
   init: function () {
     this.bindEvent()
+    this.onLoad()
   },
   onLoad: function () {
     var keyWord = _mm.getUrlParam('keyword')

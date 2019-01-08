@@ -1,0 +1,25 @@
+.pg-content {
+  text-align: center;
+  color: #333;
+}
+.pg-content .pg-item {
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 15px;
+  margin: 0 2px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  user-select: none;
+}
+.pg-content .pg-item.disabled {
+  margin-left: 10px;
+  color: #ccc;
+  background: none;
+}
+.pg-content .pg-item.active {
+    margin-left: 10px;
+    color: #ccc;
+    background: none;
+    border: solid 1px #f6f6f6;
+  }

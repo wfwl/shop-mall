@@ -1,16 +1,13 @@
-# shop-mmall
+# mmall
 
 #### 介绍
 前端电商网站
 
-#### 技术栈
-webpack4.x + jQuery
+#### 软件架构
+jQuery + webpack4.x
 
-``` bash
+
 #### 安装教程
 
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
+1. npm install
+2. npm run dev
