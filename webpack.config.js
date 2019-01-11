@@ -26,16 +26,19 @@ const config = {
     'detail': ['./src/pages/detail/index.js'],
     'login': ['./src/pages/login/index.js'],
     'result': ['./src/pages/result/index.js'],
+    'payment': ['./src/pages/payment/index.js'],
     'passReset': ['./src/pages/passReset/index.js'],
     'register': ['./src/pages/register/index.js'],
     'passUpdate': ['./src/pages/passUpdate/index.js'],
     'userCenter': ['./src/pages/userCenter/index.js'],
     'orderConfirm': ['./src/pages/orderConfirm/index.js'],
+    'orderList': ['./src/pages/orderList/index.js'],
+    'orderDetail': ['./src/pages/orderDetail/index.js'],
     'userCenterUpdate': ['./src/pages/userCenterUpdate/index.js']
   },
   output: {
     filename: 'js/[name].js',
-    publicPath: '/',
+    publicPath: '/dist',
     path: path.resolve(__dirname, "dist")
   },
   externals: {
@@ -50,15 +53,15 @@ const config = {
       utils: __dirname + '/src/utils'
     }
   },
-  devServer:{
-		//设置服务器访问的基本目录
-    contentBase:path.resolve(__dirname,'dist'),
-		//服务器ip地址，localhost
-    inline: true,
-		port: 8088,
-		open: true, // 自动打开浏览器
-		hot: true // 2热更新
-	},
+  // devServer:{
+	// 	//设置服务器访问的基本目录
+  //   contentBase:path.resolve(__dirname,'dist'),
+	// 	//服务器ip地址，localhost
+  //   inline: true,
+	// 	port: 8088,
+	// 	open: true, // 自动打开浏览器
+	// 	hot: true // 2热更新
+	// },
   module: {
     rules: [
       {
@@ -75,7 +78,7 @@ const config = {
         ]
       },
       {
-        test:/\.(png|jpg|gif|woff|svg|ttf|eot|woff2)$/i,
+        test:/\.(png|jpg|gif|jpeg|woff|svg|ttf|eot|woff2)$/i,
         use:[
           {
             loader: 'url-loader',
@@ -106,24 +109,26 @@ const config = {
   　　filename: "css/[name].css",
   　　chunkFilename: "css/[name].css"
 　　 }),
-    new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin(getHtmlConfig('list', '商品列表页')),
-    new HtmlWebpackPlugin(getHtmlConfig('cart', '购物车')),
-    new HtmlWebpackPlugin(getHtmlConfig('orderConfirm', '订单确认')),
     new HtmlWebpackPlugin(getHtmlConfig('index', '首页')),
-    new HtmlWebpackPlugin(getHtmlConfig('detail', '商品详情')),
-    new HtmlWebpackPlugin(getHtmlConfig('login', '用户登录')),
-    new HtmlWebpackPlugin(getHtmlConfig('result', '操作结果')),
+    new HtmlWebpackPlugin(getHtmlConfig('cart', '购物车')),
     new HtmlWebpackPlugin(getHtmlConfig('register', '注册')),
+    new HtmlWebpackPlugin(getHtmlConfig('login', '用户登录')),
+    new HtmlWebpackPlugin(getHtmlConfig('detail', '商品详情')),
+    new HtmlWebpackPlugin(getHtmlConfig('result', '操作结果')),
+    new HtmlWebpackPlugin(getHtmlConfig('list', '商品列表页')),
+    new HtmlWebpackPlugin(getHtmlConfig('orderList', '订单列表')),
+    new HtmlWebpackPlugin(getHtmlConfig('payment', '支付页面')),
+    new HtmlWebpackPlugin(getHtmlConfig('orderDetail', '订单详情')),
     new HtmlWebpackPlugin(getHtmlConfig('passReset', '找回密码')),
+    new HtmlWebpackPlugin(getHtmlConfig('passUpdate', '修改密码')),
     new HtmlWebpackPlugin(getHtmlConfig('userCenter', '个人中心')),
-    new HtmlWebpackPlugin(getHtmlConfig('userCenterUpdate', '个人中心')),
-    new HtmlWebpackPlugin(getHtmlConfig('passUpdate', '修改密码'))
+    new HtmlWebpackPlugin(getHtmlConfig('orderConfirm', '订单确认')),
+    new HtmlWebpackPlugin(getHtmlConfig('userCenterUpdate', '个人中心'))
   ]
 }
 
-// if ('dev' === WEBPACK_ENV) {
-//   config.entry.base.push('webpack-dev-server/client?http://localhost:8088/')
-// }
+if ('dev' === WEBPACK_ENV) {
+  config.entry.common.push('webpack-dev-server/client?http://localhost:8088/')
+}
 
 module.exports = config

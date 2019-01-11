@@ -31,7 +31,7 @@ var page = {
     $(document).on('click', '.order-submit', function() {
       var shippingId = _this.data.selectedAddressId
       if (shippingId) {
-        _prder.createOrder({
+        _order.createOrder({
           shippingId: shippingId
         },function(res) {
           window.location.href= './payment.html?orderNumber=' + res.orderNo
@@ -52,7 +52,8 @@ var page = {
       })
     })
     // 编辑地址
-    $(document).on('click', '.address-update', function(){
+    $(document).on('click', '.address-update', function(e){
+      e.stopPropagation()
       var shippingId = $(this).parents('.address-item').data('id')
       _address.getAddress(shippingId, function(res){
         _addressModal.show({
@@ -66,16 +67,43 @@ var page = {
         _mm.errorTips(errMsg)
       })
     })
+    // 删除地址
+    $(document).on('click', '.address-delete', function(e) {
+      e.stopPropagation()
+      var id = $(this).parents('.address-item').data('id')
+      if (window.confirm('确定删除该地址信息么')) {
+        _address.deleteAddress(id, function(res){
+          _this.loadAddressList()
+        }, function(errMsg){
+          _mm.errorTips(errMsg)
+        })
+      }
+    })
   },
   // 获取地址列表
   loadAddressList: function(){
     var _this = this
     _address.getAddressList(function(res){
+      _this.addressFilter(res)
       var addressHtml = _mm.renderHtml(templateAddress, res)
       $('.address-con').html(addressHtml)
     },function(errMsg){
       $('.address-con').html('<p class="err-tip">地址加载失败，刷新下试试吧。</p>')
     })
+  },
+  addressFilter: function(data) {
+    if (this.data.selectedAddressId) {
+      var selectedAddressIdFlag = false
+      for (var i = 0, length = data.list.length; i < length; i++) {
+        if (data.list[i].id === this.data.selectedAddressId) {
+          data.list[i].isActive = true
+          selectedAddressIdFlag = true
+        }
+      }
+      if (!selectedAddressIdFlag) {
+        this.data.selectedAddressId = false
+      }
+    }
   },
   // 获取商品列表
   loadProductList: function(){
@@ -84,7 +112,7 @@ var page = {
       var productHtml = _mm.renderHtml(templateProduct, res)
       $('.product-con').html(productHtml)
     },function(errMsg){
-      $('.product-con').html('<p class="err-tip">商品信息加载失败，刷新下试试吧。</p>')
+      $('.product-con').html('<p class="err-tip">'+ errMsg +'</p>')
     })
   }
 }

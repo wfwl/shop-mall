@@ -17,7 +17,38 @@ var _order = {
        data: orderInfo,
        error: reject
     })
-  }
+  },
+  // 获取订单列表
+  getOrderList: function (listParam, resolve, reject) {
+    _mm.request({
+       url: _mm.geServerUrl('/order/list.do'),
+       success: resolve,
+       data: listParam,
+       error: reject
+    })
+  },
+  // 获取订单详情
+  getOrderDetail: function (orderNumber, resolve, reject) {
+    _mm.request({
+       url: _mm.geServerUrl('/order/detail.do'),
+       success: resolve,
+       data: {
+        orderNo: orderNumber
+       },
+       error: reject
+    })
+  },
+  // 取消订单
+  cancelOrder: function (orderNumber, resolve, reject) {
+    _mm.request({
+       url: _mm.geServerUrl('/order/cancel.do'),
+       success: resolve,
+       data: {
+        orderNo: orderNumber
+       },
+       error: reject
+    })
+  },
 }
 
 module.exports = _order

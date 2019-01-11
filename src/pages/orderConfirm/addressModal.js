@@ -77,11 +77,11 @@ var addressModal = {
     // 如果是更新地址，并且有省份信息，做省份的回填
     if (this.option.isUpdate && this.option.data.receiverProvince) {
       $provinceSelect.val(this.option.data.receiverProvince);
-      this.loadCity(this.option.data.receiverProvince);
+      this.loadCities(this.option.data.receiverProvince);
     }
   },
   // 加载城市信息
-  loadCity: function (provinceName) {
+  loadCities: function (provinceName) {
     var cities = _cities.getCities(provinceName) || [],
       $citySelect = this.$modalWrap.find('#receiver-city');
     $citySelect.html(this.getSelectOption(cities));

@@ -47,7 +47,7 @@
         <input type="text" class="count-input" value="{{quantity}}" data-max="{{productStock}}">
         <span class="count-btn plus">+</span>
       </td>
-      <td class="cart-cell cell-total">¥{{cartTotalPrice}}</td>
+      <td class="cart-cell cell-total">¥{{productTotalPrice}}</td>
       <td class="cart-cell cell-opera">
         <span class="link cart-delete">删除</span>
       </td>

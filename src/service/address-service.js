@@ -40,6 +40,16 @@ var _address = {
        success: resolve,
        error: reject
     })
+  },
+  deleteAddress: function (shippingId, resolve, reject) {
+    _mm.request({
+       url: _mm.geServerUrl('/shipping/del.do'),
+       data: {
+         shippingId: shippingId
+       },
+       success: resolve,
+       error: reject
+    })
   }
 }
 
