@@ -1,9 +1,6 @@
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin") 
-
-const  WEBPACK_ENV = process.env.WEBPACK_ENV || 'dev'
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 const getHtmlConfig = function (name, title) {
   return {
@@ -16,65 +13,44 @@ const getHtmlConfig = function (name, title) {
   }
 }
 
+let WEBPACK_ENV = process.env.WEBPACK_ENV || 'development'
+
 const config = {
-  mode: WEBPACK_ENV === 'dev' ? 'development' : 'production',
+  mode: WEBPACK_ENV,
   entry: {
-    'common': ['./src/pages/common/index.js'],
-    'list': ['./src/pages/list/index.js'],
-    'cart': ['./src/pages/cart/index.js'],
-    'index': ['./src/pages/index/index.js'],
-    'detail': ['./src/pages/detail/index.js'],
-    'login': ['./src/pages/login/index.js'],
-    'result': ['./src/pages/result/index.js'],
-    'payment': ['./src/pages/payment/index.js'],
-    'passReset': ['./src/pages/passReset/index.js'],
-    'register': ['./src/pages/register/index.js'],
-    'passUpdate': ['./src/pages/passUpdate/index.js'],
-    'userCenter': ['./src/pages/userCenter/index.js'],
-    'orderConfirm': ['./src/pages/orderConfirm/index.js'],
-    'orderList': ['./src/pages/orderList/index.js'],
-    'orderDetail': ['./src/pages/orderDetail/index.js'],
-    'userCenterUpdate': ['./src/pages/userCenterUpdate/index.js']
+    'common': ['./src/page/common/index.js'],
+    'index': ['./src/page/index/index.js'],
+    'login': ['./src/page/login/index.js']
   },
   output: {
+    path: path.resolve(__dirname, './dist'),
     filename: 'js/[name].js',
-    publicPath: '/dist',
-    path: path.resolve(__dirname, "dist")
+    publicPath: '/dist'
   },
   externals: {
-    'jquery': 'window.jQuery'
+    jquery: 'window.jQuery'
   },
-  resolve: {
-    alias: {
-      image: __dirname + '/src/image',
-      pages: __dirname + '/src/pages',
-      node_modules: __dirname + '/node_modules',
-      service: __dirname + '/src/service',
-      utils: __dirname + '/src/utils'
+  optimization: {
+    splitChunks: {  //分割代码块
+      cacheGroups: {  //缓存组 缓存公共代码
+        common: { //公共模块 
+          name: 'common',
+          // 抽出入口文件中的common作为公共js
+          chunks(chunk) {
+            return chunk.name === 'common'
+          },
+          minSize: 0      //代码最小多大，进行抽离
+        }
+      }
     }
   },
-  // devServer:{
-	// 	//设置服务器访问的基本目录
-  //   contentBase:path.resolve(__dirname,'dist'),
-	// 	//服务器ip地址，localhost
-  //   inline: true,
-	// 	port: 8088,
-	// 	open: true, // 自动打开浏览器
-	// 	hot: true // 2热更新
-	// },
   module: {
     rules: [
       {
         test: /\.css$/,
         use: [
-          MiniCssExtractPlugin.loader, 
+          MiniCssExtractPlugin.loader,
           "css-loader"
-        ]
-      },
-      {
-        test: /\.string$/,
-        use: [
-          "html-loader"
         ]
       },
       {
@@ -91,44 +67,25 @@ const config = {
       }
     ]
   },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        common: {
-          name: 'common',
-          minSize: 0,
-          chunks (chunk) {
-            return ['common'].includes(chunk.name)
-          }
-        }
-      }
+  resolve: {
+    alias: {
+      image: __dirname + '/src/image',
+      page: __dirname + '/src/page',
+      node_modules: __dirname + '/node_modules',
+      service: __dirname + '/src/service',
+      util: __dirname + '/src/util'
     }
   },
   plugins: [
     new MiniCssExtractPlugin({
-  　　filename: "css/[name].css",
-  　　chunkFilename: "css/[name].css"
-　　 }),
+      filename: "css/[name].css",
+      chunkFilename: "css/[name].css"
+    }),
     new HtmlWebpackPlugin(getHtmlConfig('index', '首页')),
-    new HtmlWebpackPlugin(getHtmlConfig('cart', '购物车')),
-    new HtmlWebpackPlugin(getHtmlConfig('register', '注册')),
-    new HtmlWebpackPlugin(getHtmlConfig('login', '用户登录')),
-    new HtmlWebpackPlugin(getHtmlConfig('detail', '商品详情')),
-    new HtmlWebpackPlugin(getHtmlConfig('result', '操作结果')),
-    new HtmlWebpackPlugin(getHtmlConfig('list', '商品列表页')),
-    new HtmlWebpackPlugin(getHtmlConfig('orderList', '订单列表')),
-    new HtmlWebpackPlugin(getHtmlConfig('payment', '支付页面')),
-    new HtmlWebpackPlugin(getHtmlConfig('orderDetail', '订单详情')),
-    new HtmlWebpackPlugin(getHtmlConfig('passReset', '找回密码')),
-    new HtmlWebpackPlugin(getHtmlConfig('passUpdate', '修改密码')),
-    new HtmlWebpackPlugin(getHtmlConfig('userCenter', '个人中心')),
-    new HtmlWebpackPlugin(getHtmlConfig('orderConfirm', '订单确认')),
-    new HtmlWebpackPlugin(getHtmlConfig('userCenterUpdate', '个人中心'))
+    new HtmlWebpackPlugin(getHtmlConfig('login', '登录'))
   ]
 }
-
-if ('dev' === WEBPACK_ENV) {
-  config.entry.common.push('webpack-dev-server/client?http://localhost:8088/')
+if (WEBPACK_ENV === 'development') {
+  config.entry.common.push('webpack-dev-server/client?http://localhost:8088')
 }
-
 module.exports = config
